@@ -4,7 +4,9 @@
 #include <string>
 #include <vector>
 #include <cmath>
+#include <thread>
 #include <mutex>
+#include <condition_variable>
 #include <fstream>
 using namespace std;
 
@@ -23,7 +25,6 @@ struct thread_data{
 
 class Solution {
 public:
-  void* kmeans(void*);
   void read_image();
   void write_image();
   void do_cluster();

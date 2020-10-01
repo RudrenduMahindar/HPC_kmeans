@@ -2,7 +2,8 @@
 #include <iostream>
 using namespace std;
 
-std::mutex m;
+mutex m;
+condition_variable cv;  
 
 int calc_dist(unsigned char b,int c)
 {
@@ -35,10 +36,22 @@ void Solution::write_image()
 	cout << "File Saved Succesfully" << endl;
 }
 
-void Solution::do_cluster()
+/*dummy function for multithreading*/
+void kmeans(int id)
 {
 
-//TODO: for each thread do kmeans on assigned elements
+}
 
-
+void Solution::do_cluster()
+{
+	//reference of creating mutiple threads: https://stackoverflow.com/questions/10661792/how-to-create-an-array-of-thread-objects-in-c11
+	thread mythreads[4]; 
+	for(int i = 0; i < 4 ; i++)
+	{
+		mythreads[i] = thread(kmeans, i); // passing function, thread_id
+	}
+	for(int i = 0; i < 4 ; i++)
+	{
+		mythreads[i].join();	
+	}
 }
