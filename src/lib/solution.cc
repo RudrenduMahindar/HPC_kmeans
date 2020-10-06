@@ -29,15 +29,15 @@ int calc_dist(unsigned char b,int c)
 
 void Solution::read_image()
 {
-  img = new unsigned char[h*w];
-  FILE *fp = nullptr;
+  	img = new unsigned char[h*w];
+  	FILE *fp = nullptr;
 	if (!(fp = fopen(input_file,"rb"))) {
 		cout << "Cannot open file: " << input_file << endl;
 		exit(1);
 	}
 	fread(img, sizeof(unsigned char), h*w, fp);
 	fclose(fp);
-  cout << "File Read Succesfully" << endl;
+  	cout << "File Read Succesfully" << endl;
 }
 
 void Solution::write_image()
@@ -91,26 +91,26 @@ void kmeans(thread_data* arg)
 			iteration_complete = true;
 			/*get the mean of each cluster for each thread*/
 			for(l = 0; l < num_of_clusters ; l++)
-     		{	
-     			s = n = 0;	
-	   		    for(j = 0; j < num_of_threads; j++)
+     			{	
+     				s = n = 0;	
+	   			for(j = 0; j < num_of_threads; j++)
 	 			{
 					s += thread_data_array[j].sum[l];
 					n += thread_data_array[j].no[l];
-	 		    }
+	 		    	}
 	 			cluster_mean[l] = s/n;
-    		}
+    			}
 			ul.unlock();
-    		thread_cv.notify_all(); 
-    		ul.lock();
+    			thread_cv.notify_all(); 
+    			ul.lock();
 		}
 		else if(r == 1)//first thread of this iteration resets this flag before going to wait in queue
 		{
 			iteration_complete = false;
 		}
 		// if blocked, ul.unlock() is automatically called.
-    	// if unblocked, ul.lock() is automatically called.
-    	thread_cv.wait(ul, []() { return iteration_complete; }); //return when flag is true
+    		// if unblocked, ul.lock() is automatically called.
+    		thread_cv.wait(ul, []() { return iteration_complete; }); //return when flag is true
 	}
 }
 
@@ -123,7 +123,7 @@ void Solution::do_cluster()
 	for(i = 0; i < num_of_threads ; i++)
 	{
 		thread_data_array[i].thread_id = i;
-        thread_data_array[i].limit = ((h*w)/num_of_threads);
+        	thread_data_array[i].limit = ((h*w)/num_of_threads);
 		mythreads[i] = thread(kmeans, &thread_data_array[i]); // passing function, thread_parameters
 	}
 	for(i = 0; i < num_of_threads ; i++)
